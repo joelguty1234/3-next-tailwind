@@ -4,9 +4,12 @@ import Link from "next/link";
 import Image from 'next/image'
 import { getReviews } from "@/lib/reviews";
 
+
+
 export default async function homePage() {
-  // console.log("rendering");
+
   const reviews = await getReviews(3)
+  console.log("[HomePage] rendering: ", reviews.map((review) => review.slug).join(', '));
   return (
     <>
       <Heading>Advizo</Heading>

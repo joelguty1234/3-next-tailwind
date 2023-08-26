@@ -2,22 +2,30 @@ import Heading from "@/components/Heading";
 import ShareButtons from "@/components/ShareButtons";
 import { getReview, getSlugs } from "@/lib/reviews";
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 
-// export async function generateStaticParams() {
-//   const slugs = await getSlugs()
-//   return slugs.map((slug) => ({ slug }))
-// }
+
+export async function generateStaticParams() {
+  const slugs = await getSlugs()
+  return slugs.map((slug) => ({ slug }))
+}
 
 export async function generateMetadata({ params: { slug } }) {
   const review = await getReview(slug);
+  if (!review) {
+    notFound()
+  }
   return {
     title: review.title,
   };
 }
 
 export default async function ReviewPage({ params: { slug } }) {
+  console.log("[ReviewPage] rendering: ", slug);
   const review = await getReview(slug);
-  console.log("[ReviewPage] review: ", review);
+  if (!review) {
+    notFound()
+  }
   return (
     <>
       <Heading>{review.title}</Heading>

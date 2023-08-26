@@ -3,12 +3,15 @@ import Heading from "@/components/Heading";
 import { getReviews } from "@/lib/reviews";
 import Image from 'next/image'
 
+
+
 export const metadata = {
   title: "Reviews",
   description: "Only the best",
 };
 
 export default async function reviewsPage() {
+
   const reviews = await getReviews(6);
   return (
     <>
